@@ -1,3 +1,5 @@
+package src
+
 class Scanner(private var source: String) {
     private val tokens: MutableList<Token> = mutableListOf()
     private var start: Int = 0

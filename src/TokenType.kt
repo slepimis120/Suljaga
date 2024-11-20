@@ -1,3 +1,5 @@
+package src
+
 enum class TokenType {
     // Single-character tokens.
     LEFT_BRACE,
