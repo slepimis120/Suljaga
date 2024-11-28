@@ -36,21 +36,17 @@ class Scanner(private var source: String) {
             '*' -> addToken(TokenType.STAR)
             '/' -> addToken(TokenType.SLASH)
             '=' -> addToken(TokenType.EQUAL)
+            '\n' -> addToken(TokenType.NEW_LINE).also { line++ }
 
             ' ', '\r', '\t' -> {
             }
 
-            '\n' -> line++
-
-            '!' -> addToken(if (match('=')) TokenType.BANG_EQUAL else TokenType.BANG)
-
             else -> {
                 if (c.isDigit()) {
                     number()
-                } else if (c.isAlpha()){
+                } else if (c.isAlpha()) {
                     identifier()
-                }
-                else {
+                } else {
                     Suljaga.error(line, "Unexpected character.")
                 }
             }
@@ -71,36 +67,21 @@ class Scanner(private var source: String) {
         tokens.add(Token(type, text, literal, line))
     }
 
-    private fun match(expected: Char): Boolean {
-        if (isAtEnd()) return false
-        if (source[current] != expected) return false
-
-        current++
-        return true
-    }
-
-    private fun peek(): Char {
-        if (isAtEnd()) return '\u0000'
-        return source[current]
-    }
-
-    private fun peekNext(): Char {
-        if (current + 1 >= source.length) return '\u0000'
-        return source[current + 1]
-    }
-
     private fun number() {
         while (peek().isDigit()) advance()
-
         addToken(TokenType.NUMBER, source.substring(start, current).toDouble())
     }
 
     private fun identifier() {
         while (peek().isLetterOrDigit()) advance()
-
         val text = source.substring(start, current)
         val type = keywords[text] ?: TokenType.IDENTIFIER
         addToken(type)
+    }
+
+    private fun peek(): Char {
+        if (isAtEnd()) return '\u0000'
+        return source[current]
     }
 
     private fun Char.isAlpha(): Boolean {

@@ -8,6 +8,10 @@ import kotlin.system.exitProcess
 
 class Suljaga {
     companion object {
+        private var hadError = false
+        private var hadRuntimeError = false
+        private val interpreter = Interpreter()
+
         @JvmStatic
         fun main(args: Array<String>){
             if (args.size > 1){
@@ -21,13 +25,10 @@ class Suljaga {
         }
 
         private fun runFile(path: String) {
-            try {
-                val source = Paths.get(path).toFile().readText(Charset.defaultCharset())
-                run(source)
-            } catch (e: Exception) {
-                println("Error reading file: ${e.message}")
-                exitProcess(65)
-            }
+            val source = Paths.get(path).toFile().readText(Charset.defaultCharset())
+            run(source)
+            if(hadError) exitProcess(65)
+            if(hadRuntimeError) exitProcess(70)
         }
 
         private fun runPrompt() {
@@ -37,17 +38,25 @@ class Suljaga {
             while(true){
                 print("> ")
                 val line = reader.readLine() ?: break
-                run(line)
+                if (line.trim().isNotEmpty()) {
+                    run(line + "\n")
+                }
+                hadError = false
             }
         }
 
-        private fun run(source: String){
+        private fun run(source: String) {
             val scanner = Scanner(source)
             val tokens = scanner.scanTokens()
+            val parser = Parser(tokens)
+            val statements = parser.parse()
 
-            for(token in tokens){
-                print(token)
-            }
+            if (hadError) return
+
+            val resolver = Resolver(interpreter)
+            resolver.resolve(statements)
+
+            interpreter.interpret(statements)
         }
 
         fun error(line: Int, message: String){
@@ -56,6 +65,21 @@ class Suljaga {
 
         private fun report(line: Int, where: String, message: String){
             System.err.println("[line $line] Error$where: $message")
+
+            hadError = true
+        }
+
+        fun error(token: Token, message: String){
+            if(token.type == TokenType.EOF){
+                report(token.line, " at end", message)
+            } else {
+                report(token.line, " at '${token.lexeme}'", message)
+            }
+        }
+
+        fun runtimeError(error: RuntimeError){
+            System.err.println("${error.message}\n[line ${error.token?.line}]")
+            hadRuntimeError = true
         }
     }
 }

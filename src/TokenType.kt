@@ -10,10 +10,6 @@ enum class TokenType {
     SLASH,
     EQUAL,
 
-    // One or two character tokens.
-    BANG,
-    BANG_EQUAL,
-
     // Literals.
     IDENTIFIER,
     NUMBER,
@@ -23,5 +19,6 @@ enum class TokenType {
     SCOPE,
 
     // Special
+    NEW_LINE,
     EOF
 }
