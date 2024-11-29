@@ -29,7 +29,7 @@ class Parser(private var tokens: List<Token>) {
     }
 
     private fun assignment(): Expr {
-        var expr = term()
+        val expr = term()
 
         if (match(TokenType.EQUAL)) {
             val equals = previous()
@@ -206,7 +206,7 @@ class Parser(private var tokens: List<Token>) {
 
     private fun ignoreNewLines() {
         while (match(TokenType.NEW_LINE)) {
-
+            // Ignore newlines in "scope", because scope doesn't end after a newline
         }
     }
 }
