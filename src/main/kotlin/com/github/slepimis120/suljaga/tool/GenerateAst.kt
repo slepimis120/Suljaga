@@ -1,4 +1,4 @@
-package src.tool
+package com.github.slepimis120.suljaga.tool
 
 import java.io.PrintWriter
 import java.util.*

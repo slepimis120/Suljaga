@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -78,7 +78,7 @@ class Suljaga {
         }
 
         fun runtimeError(error: RuntimeError){
-            System.err.println("${error.message}\n[line ${error.token?.line}]")
+            System.err.println("${error.message}\n[line ${error.token.line}]")
             hadRuntimeError = true
         }
     }

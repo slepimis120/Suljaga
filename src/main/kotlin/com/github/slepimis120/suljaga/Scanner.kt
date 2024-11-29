@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 class Scanner(private var source: String) {
     private val tokens: MutableList<Token> = mutableListOf()
@@ -27,8 +27,7 @@ class Scanner(private var source: String) {
     }
 
     private fun scanToken() {
-        val c = advance()
-        when (c) {
+        when (val c = advance()) {
             '{' -> addToken(TokenType.LEFT_BRACE)
             '}' -> addToken(TokenType.RIGHT_BRACE)
             '-' -> addToken(TokenType.MINUS)

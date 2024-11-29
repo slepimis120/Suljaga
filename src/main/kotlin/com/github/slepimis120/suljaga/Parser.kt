@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 class Parser(private var tokens: List<Token>) {
     companion object {

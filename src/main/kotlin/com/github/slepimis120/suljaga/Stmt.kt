@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 abstract class Stmt {
     interface Visitor<R> {

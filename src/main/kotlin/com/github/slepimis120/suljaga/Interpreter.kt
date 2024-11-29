@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Any?> {
     private var environment = Environment()

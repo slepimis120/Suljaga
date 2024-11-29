@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 class Environment {
     private val values = HashMap<String, Any?>()

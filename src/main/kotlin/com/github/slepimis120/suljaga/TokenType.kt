@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 enum class TokenType {
     // Single-character tokens.

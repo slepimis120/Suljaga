@@ -1,4 +1,4 @@
-package src
+package com.github.slepimis120.suljaga
 
 class Resolver(private var interpreter: Interpreter) : Expr.Visitor<Unit>, Stmt.Visitor<Unit> {
     private val scopes = mutableListOf<HashMap<String, Boolean>>()
