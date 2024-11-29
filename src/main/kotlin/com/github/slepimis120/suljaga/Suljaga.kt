@@ -25,6 +25,10 @@ class Suljaga {
         }
 
         private fun runFile(path: String) {
+            if (!path.endsWith(".sulj")) {
+                println("Error: File must have a .sulj extension")
+                exitProcess(64)
+            }
             val source = Paths.get(path).toFile().readText(Charset.defaultCharset())
             run(source)
             if(hadError) exitProcess(65)
