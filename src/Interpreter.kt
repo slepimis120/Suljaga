@@ -44,8 +44,8 @@ class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Any?> {
     }
 
     override fun visitBinaryExpr(expr: Expr.Binary): Any? {
-        var left = evaluate(expr.left)
-        var right = evaluate(expr.right)
+        val left = evaluate(expr.left)
+        val right = evaluate(expr.right)
 
         return when(expr.operator.type){
             TokenType.PLUS -> {
@@ -76,7 +76,7 @@ class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Any?> {
         return evaluate(expr.expression)
     }
 
-    override fun visitLiteralExpr(expr: Expr.Literal): Any? {
+    override fun visitLiteralExpr(expr: Expr.Literal): Any {
         return expr.value
     }
 
@@ -158,10 +158,10 @@ class Interpreter : Expr.Visitor<Any?>, Stmt.Visitor<Any?> {
 
     private fun lookUpVariable(name: Token, expr: Expr): Any? {
         val distance = locals[expr]
-        if(distance != null){
-            return environment.getAt(distance, name.lexeme)
+        return if(distance != null){
+            environment.getAt(distance, name.lexeme)
         } else {
-            return environment.get(name)
+            environment.get(name)
         }
     }
 }

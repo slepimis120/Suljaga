@@ -29,22 +29,16 @@ class Environment {
     fun assign(name: Token, value: Any?) {
         if (values.containsKey(name.lexeme)) {
             values[name.lexeme] = value
-            return
+        } else {
+            define(name.lexeme, value)
         }
-
-        if (enclosing != null) {
-            enclosing?.assign(name, value)
-            return
-        }
-
-        define(name.lexeme, value)
     }
 
     fun getAt(distance: Int, name: String): Any? {
         return ancestor(distance).values[name]
     }
 
-    fun ancestor(distance: Int): Environment {
+    private fun ancestor(distance: Int): Environment {
         var environment = this
         for (i in 0 until distance) {
             environment = environment.enclosing!!
