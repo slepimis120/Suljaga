@@ -26,7 +26,8 @@ The project is based on the book [Crafting Interpreters](https://craftinginterpr
 To build the project, run the following command:
 
 ```bash
-./gradlew build
+gradle wrapper
+gradlew build
 ```
 
 ## Running the Project

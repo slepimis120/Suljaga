@@ -32,9 +32,25 @@ tasks.shadowJar {
     manifest {
         attributes["Main-Class"] = "com.github.slepimis120.suljaga.Suljaga"
     }
+
+    archiveBaseName.set("Suljaga")
+    archiveVersion.set("1.0.0")
+    archiveClassifier.set("")
 }
 
 tasks.build {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.distZip {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.distTar {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.startScripts {
     dependsOn(tasks.shadowJar)
 }
 
